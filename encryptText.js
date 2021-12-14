@@ -14,6 +14,7 @@ let output = 'The Encrypted Text will be shown here';
 loadEvents();
 outputSection.innerText = output;
 
+// Function that loads all of the click events on the website
 function loadEvents(){
     infoEshaanBtn.addEventListener('click', onInfoEshaan);
     infoAsmiBtn.addEventListener('click', onInfoAsmi);
@@ -27,6 +28,8 @@ function loadEvents(){
     resetBtn.addEventListener('click', onReset);
     formBtn.addEventListener('click', onFormSubmit);
 }
+
+// Functions to display the names of the team members
 const displayInfo = function(name){
     name.style.display = 'grid';
     name.style.gridTemplateColumns = '1fr 2fr';
@@ -59,6 +62,8 @@ function onCancelBtn(event){
 function onReset(){
     outputSection.innerText = 'The Encrypted Text will be shown here';
 }
+
+// Function for submission of plainText using AJAX
 function onSubmit(event){
     const   xhr = new XMLHttpRequest();
             input = document.querySelector('#plain-text').value;  
@@ -74,6 +79,7 @@ function onSubmit(event){
     xhr.send(url);
     event.preventDefault();
 }
+// Function that submits the user input to the DATABASE
 function onFormSubmit(event){
     const   output = document.querySelector('#user-form form h3'),
             userEmail = document.querySelector("#user-form form input[type='text']"),
@@ -89,7 +95,6 @@ function onFormSubmit(event){
         if(mail.indexOf('@') != -1 && mail.indexOf('.') != -1){
             let posdot = [], 
                 pos;
-            // console.log(posdot.value)
             for(let i = 0; i < mail.length; i++){
                 if(mail[i] == '@')
                     pos = i;
@@ -120,8 +125,8 @@ function onFormSubmit(event){
         console.log('This 2nd part of validation also works');
     }
     console.log('value of error:'+ error);
-    
-    // Displaying the output
+
+    // Sending form data to database via PHP using AJAX
     if(error == false){
         xhr.open('POST', 'formSubmit.php');
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -133,7 +138,7 @@ function onFormSubmit(event){
                     console.log('response from server:'+ this.responseText);
                 }
                 else
-                    console.log('response from server:'+ this.responseText);
+                console.log('response from server:'+ this.responseText);
             }
         }
         const url = 'mail='+ userEmail.value+'&userFeedback='+ userFeedback.value;
@@ -141,6 +146,7 @@ function onFormSubmit(event){
         userEmail.value = userFeedback.value = '';
         xhr.send(url);
     }
+    // Displaying the output
     else if(error == true){
         output.style.display = 'block';
     }
