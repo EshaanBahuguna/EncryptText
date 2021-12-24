@@ -1,35 +1,74 @@
 const   outputSection = document.querySelector('#output-section'),
         infoEshaanBtn = document.querySelector('#info-eshaan-btn'),
-        infoAsmiBtn = document.querySelector('#info-asmi-btn'),
+        infoAnkitBtn = document.querySelector('#info-ankit-btn'),
         infoParthBtn = document.querySelector('#info-parth-btn'),
-        infoNabihaBtn = document.querySelector('#info-nabiha-btn'),
-        infoAyushiBtn = document.querySelector('#info-ayushi-btn'),
+        infoSabpratibhBtn = document.querySelector('#info-sapratibh-btn'),
         cancelBtn = document.getElementsByClassName('cancel-btn'),
+        cancelDownloadSectionBtn = document.querySelector('#download-section .cancel-btn'),
         submitBtn = document.querySelector("input[type='submit']"),
         resetBtn = document.querySelector("input[type='reset']");
-        formBtn = document.querySelector("#user-form input[type='submit']");
+        formBtn = document.querySelector("#user-form input[type='submit']"),
+        downloadBtn = document.getElementsByClassName('download-btn'),
+        downloadButton = document.querySelector('#download-button'),
+        downloadSection = document.querySelector('#download-section'),
+        chooseOptionMenu = document.querySelector('#choose-option'),
+        copyOutput = document.querySelector('#copy-output');
 let output = 'The Encrypted Text will be shown here';
-
+let optionSelected = document.querySelector('input[type="radio"]:checked').value;
+let languageSelected;
+const codes = [
+    {title: "Random Substitution Cipher", value: 1}, 
+    {title: "Random Ceaser Cipher", value: 2}, 
+    {title: "Substitution Cipher", value: 3}, 
+    {title: "Ceaser Cipher", value: 4}, 
+    {title: "Vigenere Cipher", value: 5}, 
+    {title: "Autokey Cipher", value: 6}
+];
+const language = [
+    {title: 'C++', value: 1}, 
+    {title: 'Javascript', value: 2}, 
+    {title: 'PHP', value: 3}
+];
 // To load all events at once
 loadEvents();
 outputSection.innerText = output;
 
-// Function that loads all of the click events on the website
 function loadEvents(){
     infoEshaanBtn.addEventListener('click', onInfoEshaan);
-    infoAsmiBtn.addEventListener('click', onInfoAsmi);
+    infoAnkitBtn.addEventListener('click', onInfoAnkit);
     infoParthBtn.addEventListener('click', onInfoParth);
-    infoNabihaBtn.addEventListener('click', onInfoNabiha);
-    infoAyushiBtn.addEventListener('click', onInfoAyushi);
-    for(let i = 0; i < 5; i++){
+    infoSabpratibhBtn.addEventListener('click', onInfoSapratibh);
+    for(let i = 0; i < 4; i++){
         cancelBtn[i].addEventListener('click', onCancelBtn);
     }
+    cancelDownloadSectionBtn.addEventListener('click', onDownloadSectionCancelBtn);
     submitBtn.addEventListener('click', onSubmit);
     resetBtn.addEventListener('click', onReset);
+    copyOutput.addEventListener('click', onCopy);
     formBtn.addEventListener('click', onFormSubmit);
+    chooseOptionMenu.addEventListener('click', getSelectedCipher);
+    downloadSection.addEventListener('click', getSelectedLanguage);
+    for(let i = 0; i < 6; i++){
+        downloadBtn[i].addEventListener('click', onDownloadBtn);
+    }
+    // downloadButton.addEventListener('click', onDownloadCodeButton);
 }
-
-// Functions to display the names of the team members
+function getSelectedLanguage(e){
+    if(!isNaN(e.target.value) && e.target.value != 0){
+        languageSelected = e.target.value;
+    } 
+    downloadButton.setAttribute('href', `./download files/${codes[optionSelected-1].title}/${codes[optionSelected-1].title} (${language[languageSelected-1].title}).txt`);
+    downloadButton.setAttribute('download',  `${codes[optionSelected-1].title} (${language[languageSelected-1].title})`);
+}
+function getSelectedCipher(e){
+    if(!isNaN(e.target.value) && e.target.value != 0){
+        optionSelected = e.target.value;
+    }
+}
+function onDownloadBtn(e){
+    downloadSection.style.display = 'block';
+    e.preventDefault();
+}
 const displayInfo = function(name){
     name.style.display = 'grid';
     name.style.gridTemplateColumns = '1fr 2fr';
@@ -39,31 +78,35 @@ function onInfoEshaan(){
     const infoEshaan = document.querySelector('#info-eshaan');
     displayInfo(infoEshaan);
 }
-function onInfoAsmi(){
-    const infoAsmi = document.querySelector('#info-asmi');
-    displayInfo(infoAsmi);
+function onInfoAnkit(){
+    const infoAnkit = document.querySelector('#info-ankit');
+    displayInfo(infoAnkit);
 }
 function onInfoParth(){
     const infoParth = document.querySelector('#info-parth');
     displayInfo(infoParth);
 }
-function onInfoNabiha(){
-    const infoNabiha = document.querySelector('#info-nabiha');
-    displayInfo(infoNabiha);
-}
-function onInfoAyushi(){
-    const infoAyushi = document.querySelector('#info-ayushi');
-    displayInfo(infoAyushi);
+function onInfoSapratibh(){
+    const infoSabratibh = document.querySelector('#info-sapratibh');
+    displayInfo(infoSabratibh);
 }
 function onCancelBtn(event){
     event.target.parentElement.parentElement.parentElement.style.display = 'none';
     event.preventDefault();
 }
+function onDownloadSectionCancelBtn(event){
+    downloadSection.style.display = 'none';
+    document.querySelector('form > div').style.display = 'grid';
+    event.preventDefault();
+}
 function onReset(){
     outputSection.innerText = 'The Encrypted Text will be shown here';
 }
-
-// Function for submission of plainText using AJAX
+function onCopy(e){
+    const cb = navigator.clipboard;
+    cb.writeText(outputSection.innerText).then(()=> console.log('Text copied'));
+    e.preventDefault();
+}
 function onSubmit(event){
     const   xhr = new XMLHttpRequest();
             input = document.querySelector('#plain-text').value;  
@@ -79,7 +122,6 @@ function onSubmit(event){
     xhr.send(url);
     event.preventDefault();
 }
-// Function that submits the user input to the DATABASE
 function onFormSubmit(event){
     const   output = document.querySelector('#user-form form h3'),
             userEmail = document.querySelector("#user-form form input[type='text']"),
@@ -95,6 +137,7 @@ function onFormSubmit(event){
         if(mail.indexOf('@') != -1 && mail.indexOf('.') != -1){
             let posdot = [], 
                 pos;
+            // console.log(posdot.value)
             for(let i = 0; i < mail.length; i++){
                 if(mail[i] == '@')
                     pos = i;
@@ -125,8 +168,8 @@ function onFormSubmit(event){
         console.log('This 2nd part of validation also works');
     }
     console.log('value of error:'+ error);
-
-    // Sending form data to database via PHP using AJAX
+    
+    // Displaying the output
     if(error == false){
         xhr.open('POST', 'formSubmit.php');
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -138,7 +181,7 @@ function onFormSubmit(event){
                     console.log('response from server:'+ this.responseText);
                 }
                 else
-                console.log('response from server:'+ this.responseText);
+                    console.log('response from server:'+ this.responseText);
             }
         }
         const url = 'mail='+ userEmail.value+'&userFeedback='+ userFeedback.value;
@@ -146,7 +189,6 @@ function onFormSubmit(event){
         userEmail.value = userFeedback.value = '';
         xhr.send(url);
     }
-    // Displaying the output
     else if(error == true){
         output.style.display = 'block';
     }

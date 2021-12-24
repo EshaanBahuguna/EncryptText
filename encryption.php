@@ -4,18 +4,28 @@
     $plainText_copy = $plainText;
     $cipherText;
     switch($option){
-        case '3': 
-            $cipherText = substitution_cipher($plainText_copy, 1);
-        break;
         case '1': 
-            $cipherText = ceaser_cipher($plainText_copy, 1);
-        break;
-        case '2':
-            $cipherText = ceaser_cipher($plainText_copy, 2);
-        break;
-        case '4':
             $cipherText = substitution_cipher($plainText_copy, 2);
+            break;
+        case '2': 
+            $cipherText = ceaser_cipher($plainText_copy, 2);
+            break;
+        case '3':
+            $cipherText = substitution_cipher($plainText_copy, 1);
+            break;
+        case '4':
+            $cipherText = ceaser_cipher($plainText_copy, 1);
+            break;
+        case '5':
+            $cipherText = vigenere_cipher($plainText_copy);
+            break;
+        case '6':
+            $cipherText = autokey_cipher($plainText_copy);
+            break;
+        default: 
+            $cipherText = "uh-oh something went wrong.";
     }
+    // Option 1 for normal technique and 2 for Random variants 
     function ceaser_cipher($plainText, $option){
         if($option == 1){
             $key = mt_rand(0, 25);
@@ -118,6 +128,46 @@
                     $temp++;
                 }
             }
+        }
+        return $plainText;
+    }
+    function vigenere_cipher($plainText){
+        // Making the key for the cipherText
+        $key = array();
+        for($i = 0; $i < 10; $i++){
+            array_push($key, mt_rand(0, 25));
+        }
+        // Modifying the plainText by adding the key to it
+        for($i = 0; $i < strlen($plainText); $i++){
+            if($plainText[$i] == " "){
+                continue;
+            }
+            $key_index = $i % 10; 
+            $ascii_plainText = ord($plainText[$i]);
+            $plainText[$i] = chr((($ascii_plainText + $key[$key_index]) % 26) + 97);
+        }
+        return $plainText;
+    }
+    function autokey_cipher($plainText){
+        $key = array();
+        // Setting up the base key 
+        for($i = 0; $i < 10; $i++){
+            array_push($key, mt_rand(0, 25));
+        }
+        // Adding plainText to complete the key
+        if(strlen($plainText) > count($key)){
+            $temp  = strlen($plainText) - count($key);
+            for($i = 0; $temp > 0; $i++, $temp--){
+                array_push($key, ord($plainText[$i]) - 97);
+            }
+        }
+        // Modigying the plainText like vigenere cipher 
+        for($i = 0; $i < strlen($plainText); $i++){
+            if($plainText[$i] == " "){
+                continue;
+            }
+            $ascii_plainText = ord($plainText[$i]);
+            $plainText[$i] = chr((($ascii_plainText + $key[$i]) % 26) + 97);
         }
         return $plainText;
     }

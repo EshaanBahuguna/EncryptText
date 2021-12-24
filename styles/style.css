@@ -38,7 +38,7 @@ h3{
     font-size: 2.3rem;
     margin: 10px 0px;
 }
-.btn{
+.btn, .btn-large{
     padding: 10px 15px;
     width: 150px;
     height: 50px;
@@ -48,8 +48,9 @@ h3{
     transition: all 0.25s ease-in;
     font-family: 'Staatliches', cursive;
     font-weight: bolder;
+    text-decoration: none;
 }
-.btn:hover{
+.btn:hover, .btn-large:hover{
     color: var(--primary-color);
 }
 
@@ -204,6 +205,65 @@ main input[type="reset"]:hover{
 }
 #choose-option a:hover{
     color: var(--primary-color);
+}
+#choose-option .download-btn{
+    cursor: pointer;
+}
+#download-section{
+    position: absolute;
+    top: 1.5rem;
+    right: 1.25rem;
+    height: 62%;
+    border-radius: 5px;
+    border: 1px solid var(--secondary-color);
+    width: 30%;
+    background: rgba(0, 0, 0, 1);
+    z-index: 2;
+    padding: 1rem;
+    display: none;
+}
+#download-section > a{
+    position: relative;
+    left: 17rem;
+    color: var(--secondary-color);
+}
+#download-section > div{
+    margin-top: 0.8rem;
+    font-size: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#download-section > div span{
+    font-family: Lobster, sans-serif;
+}
+#download-section > div > div{
+    margin: 10px 0;
+}
+#download-button{
+    margin-top: 1.3rem;
+    border: 1px solid var(--primary-color);
+}
+form #note{
+    color: darkgrey;
+    font-style: italic;
+    grid-column: 5/7;
+    grid-row: 6/7;
+    padding-left: 8px; 
+    font-size: 0.8rem;
+}
+form .btn-large{
+    grid-row: 7/8;
+    grid-column: 5/6;
+    font-size: 25px;
+    text-align: center;
+    border: var(--secondary-color) 1px solid;
+    border-radius: 5px;
+    margin-top: 4.9rem;
+}
+form .btn-large:hover{
+    cursor: pointer;
 }
 
 /* About the website */
@@ -384,7 +444,7 @@ main input[type="reset"]:hover{
 /* User form */
 #user-form{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
 }
 #user-form > div{
     display: flex;
