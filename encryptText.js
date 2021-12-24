@@ -1,8 +1,9 @@
 const   outputSection = document.querySelector('#output-section'),
         infoEshaanBtn = document.querySelector('#info-eshaan-btn'),
-        infoAnkitBtn = document.querySelector('#info-ankit-btn'),
         infoParthBtn = document.querySelector('#info-parth-btn'),
-        infoSabpratibhBtn = document.querySelector('#info-sapratibh-btn'),
+        infoAsmiBtn = document.querySelector('#info-asmi-btn'),
+        infoNabihaBtn = document.querySelector('#info-nabiha-btn'),
+        infoAyushiBtn = document.querySelector('#info-ayushi-btn'),
         cancelBtn = document.getElementsByClassName('cancel-btn'),
         cancelDownloadSectionBtn = document.querySelector('#download-section .cancel-btn'),
         submitBtn = document.querySelector("input[type='submit']"),
@@ -35,9 +36,10 @@ outputSection.innerText = output;
 
 function loadEvents(){
     infoEshaanBtn.addEventListener('click', onInfoEshaan);
-    infoAnkitBtn.addEventListener('click', onInfoAnkit);
+    infoAsmiBtn.addEventListener('click', onInfoAsmi);
     infoParthBtn.addEventListener('click', onInfoParth);
-    infoSabpratibhBtn.addEventListener('click', onInfoSapratibh);
+    infoAyushiBtn.addEventListener('click', onInfoAyushi);
+    infoNabihaBtn.addEventListener('click', onInfoNabiha);
     for(let i = 0; i < 4; i++){
         cancelBtn[i].addEventListener('click', onCancelBtn);
     }
@@ -78,17 +80,21 @@ function onInfoEshaan(){
     const infoEshaan = document.querySelector('#info-eshaan');
     displayInfo(infoEshaan);
 }
-function onInfoAnkit(){
-    const infoAnkit = document.querySelector('#info-ankit');
-    displayInfo(infoAnkit);
+function onInfoAsmi(){
+    const infoAsmi = document.querySelector('#info-ankit');
+    displayInfo(infoAsmi);
 }
 function onInfoParth(){
     const infoParth = document.querySelector('#info-parth');
     displayInfo(infoParth);
 }
-function onInfoSapratibh(){
-    const infoSabratibh = document.querySelector('#info-sapratibh');
-    displayInfo(infoSabratibh);
+function onInfoAyushi(){
+    const infoAyushi = document.querySelector('#info-sapratibh');
+    displayInfo(infoAyushi);
+}
+function onInfoNabiha(){
+    const infoNabiha = document.querySelector('#info-sapratibh');
+    displayInfo(infoNabiha);
 }
 function onCancelBtn(event){
     event.target.parentElement.parentElement.parentElement.style.display = 'none';
